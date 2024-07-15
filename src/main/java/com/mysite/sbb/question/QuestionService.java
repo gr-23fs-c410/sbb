@@ -6,5 +6,5 @@ public interface QuestionService {
 	
 	public List<Question> getList();
 	public Question getQuestion(Integer id);
-
+	public void create(String subject, String content);
 }

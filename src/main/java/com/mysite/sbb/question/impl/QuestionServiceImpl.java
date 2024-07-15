@@ -1,5 +1,6 @@
 package com.mysite.sbb.question.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,15 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 	
+	@Override
+	public void create(String subject, String content) {
+		Question q = new Question();
+        q.setSubject(subject);
+        q.setContent(content);
+        q.setCreateDate(LocalDateTime.now());
+        this.questionRepository.save(q);
+	}
+
 	private final QuestionRepository questionRepository;
 
 	@Override
