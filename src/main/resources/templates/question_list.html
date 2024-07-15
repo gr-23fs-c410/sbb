@@ -17,7 +17,9 @@
 		<tbody>
 			<tr th:each="question, loop : ${questionList}">
 				<td th:text=${loop.count}></td>
-				<td>[[${question.subject}]]</td>
+				<td>
+					<a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+				</td>
 				<td th:text="${question.createDate}"></td>
 			</tr>
 		</tbody>
