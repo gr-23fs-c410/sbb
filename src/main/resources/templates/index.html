@@ -16,7 +16,7 @@ async function loadQuestions(page) {
     try {
 	   const kw = document.getElementById('keyword').value;
 	   const encodedKw = encodeURIComponent(kw);
-	   fetch(`/api/question?page=${page}&kw=${kw}`)
+	   fetch(`/api/question?page=${page}&kw=${encodedKw}`)
 	       .then(response => response.json())
 	       .then(data => {
 	    	   const questions = data.content;
