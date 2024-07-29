@@ -1,0 +1,51 @@
+<html layout:decorate="~{layout}">
+
+<div layout:fragment="content">
+    <h1>홈 페이지</h1>
+    <h2>질문목록 가져오기</h2>
+    <input type="text" id="keyword" placeholder="검색어를 입력하세요." />
+    <button onclick="loadQuestions(0)">검색</button>
+    <div id="questionList"></div>
+    <div id="pagination"></div>
+    <p>
+        Total items: <span id="totalItems"></span>
+    </p>
+</div>
+<script th:inline="javascript" layout:fragment="script">
+async function loadQuestions(page) {
+    try {
+	   const kw = document.getElementById('keyword').value;
+	   const encodedKw = encodeURIComponent(kw);
+	   fetch(`/api/question?page=${page}&kw=${kw}`)
+	       .then(response => response.json())
+	       .then(data => {
+	    	   const questions = data.content;
+	    	   const currentPage = data.currentPage;
+	    	   const totalPages = data.totalPages;
+		   
+	    	   let html = '<ul>';
+	    	   questions.forEach(q => {
+	    		   html += `<li>${q.subject}</li>`;
+	    		   });
+		   html += '</ul>';
+		   
+		   let pagination = '';
+		   for (let i = 0; i < totalPages; i++) {
+			   const activeClass = i == currentPage ? 'active' : '';
+			   pagination += `<button class="${activeClass}" onclick="loadPosts(${i})">${i + 1}</button>`;
+		   }
+		   
+		   document.getElementById('questionList').innerHTML = html;
+		   document.getElementById('pagination').innerHTML = pagination;
+		   document.getElementById('totalItems').textContent = data.totalItems;
+	   })
+	}
+	catch(error){
+		    console.log('Error:', error);
+	   };
+}
+/* window.onload = function() {
+	loadQuestions(0);
+} */
+</script>
+</html>

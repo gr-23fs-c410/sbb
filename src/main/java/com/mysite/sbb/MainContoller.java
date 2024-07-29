@@ -16,6 +16,6 @@ public class MainContoller {
 	
 	@GetMapping("/")
 	public String root() {
-		return "redirect:/question/list";
+		return "index";
 	}
 }
